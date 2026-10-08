@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:order-test-${random.uuid};DB_CLOSE_DELAY=-1;LOCK_TIMEOUT=120000
+  cloud:
+    discovery:
+      enabled: false
+    loadbalancer:
+      enabled: false
+
+eureka:
+  client:
+    enabled: false
+
+rate-limit:
+  orders:
+    enabled: false

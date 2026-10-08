@@ -1,0 +1,13 @@
+pluginManagement {
+    plugins {
+        id 'org.springframework.boot' version "${springBootVersion}"
+        id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    }
+}
+
+rootProject.name = 'delivery-system'
+
+include 'eureka-server'
+include 'order-service'
+include 'payment-service'
+include 'review-service'

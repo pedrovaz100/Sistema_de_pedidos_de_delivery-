@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: order-service
+  config:
+    import:
+      - optional:file:../.env[.properties]
+      - optional:file:./.env[.properties]
+  datasource:
+    url: jdbc:h2:mem:orderdb;DB_CLOSE_DELAY=-1;LOCK_TIMEOUT=120000
+    username: sa
+    password:
+    hikari:
+      maximum-pool-size: 80
+      connection-timeout: 120000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  cloud:
+    loadbalancer:
+      cache:
+        ttl: 5s
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:not-configured}
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+      timeout: 25s
+      max-retries: 1
+      chat:
+        model: ${OPENAI_MODEL:gpt-4o-mini}
+        temperature: 0.2
+
+payment:
+  retry:
+    max-retries: 5
+    delay: 200
+    multiplier: 2.0
+    jitter: 100
+    max-delay: 2000
+
+rate-limit:
+  orders:
+    enabled: true
+    permits-per-second: 20
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+  client:
+    registry-fetch-interval-seconds: 5
